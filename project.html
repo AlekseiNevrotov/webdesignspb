@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Typing Console with Soft Sound & Reverb</title>
+  <style>
+    body {
+      background: black;
+      color: #33ff33;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 2em;
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      user-select: none;
+      text-align: center;
+    }
+    #console {
+      border: 2px solid #33ff33;
+      padding: 1em;
+      max-width: 600px;
+      margin: 1em auto;
+      box-shadow: 0 0 15px #33ff33;
+      filter: drop-shadow(0 0 5px #33ff33);
+      min-height: 120px;
+      animation: flicker 0.15s infinite;
+      white-space: pre-wrap;
+    }
+    button {
+      background: #222;
+      border: 2px solid #33ff33;
+      color: #33ff33;
+      padding: 10px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-top: 2em;
+      box-shadow: 0 0 10px #33ff33;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #333;
+    }
+    @keyframes flicker {
+      0%, 100% {opacity: 1;}
+      50% {opacity: 0.85;}
+      70% {opacity: 0.9;}
+    }
+  </style>
+</head>
+<body>
+
+<div id="console"></div>
+<button id="startBtn">Нажмите, чтобы начать</button>
+
+<script>
+  const text = "Привет! Это имитация набора текста с мягким звуком и реверберацией на старом мониторе.\n\nСмотри, как буквы появляются по одной...";
+  const consoleElem = document.getElementById('console');
+  const startBtn = document.getElementById('startBtn');
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  const delay = audioCtx.createDelay();
+  delay.delayTime.value = 0.15;
+
+  const feedbackGain = audioCtx.createGain();
+  feedbackGain.gain.value = 0.3;
+
+  delay.connect(feedbackGain);
+  feedbackGain.connect(delay);
+
+  delay.connect(audioCtx.destination);
+
+  function playClick() {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(delay);
+
+    oscillator.start();
+
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+    oscillator.stop(audioCtx.currentTime + 0.1);
+  }
+
+  let idx = 0;
+
+  function typeWriter() {
+    if (idx < text.length) {
+      consoleElem.textContent += text.charAt(idx);
+      playClick();
+      idx++;
+      setTimeout(typeWriter, 100 + Math.random() * 100);
+    }
+  }
+
+  startBtn.addEventListener('click', () => {
+    audioCtx.resume().then(() => {
+      startBtn.style.display = 'none';
+      typeWriter();
+    });
+  });
+</script>
+
+</body>
+</html>
