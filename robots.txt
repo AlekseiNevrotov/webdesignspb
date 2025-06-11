@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://elazar.vercel.app/sitemap.xml
