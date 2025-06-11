@@ -1,7 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/palette", "destination": "/palette.html" },
-    { "source": "/image", "destination": "/image.html" },
-    { "source": "/synth", "destination": "/synth.html" }
-  ]
-}
