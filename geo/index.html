@@ -14,60 +14,42 @@
       font-size: 1.2rem;
       color: #333;
     }
-    button {
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: #2b6cb0;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2c5282;
-    }
   </style>
 </head>
 <body>
 
-  <h1>Узнать свою координату</h1>
-  <button onclick="getLocation()">Показать координаты</button>
-
-  <div class="coords" id="output"></div>
+  <h1>Ваши координаты</h1>
+  <div class="coords" id="output">Определение координат...</div>
 
   <script>
-    function getLocation() {
-      const output = document.getElementById('output');
+    const output = document.getElementById('output');
 
-      if (!navigator.geolocation) {
-        output.innerHTML = 'Геолокация не поддерживается этим браузером.';
-        return;
-      }
-
-      output.innerHTML = 'Определение координат...';
-
-      navigator.geolocation.getCurrentPosition(
-  (position) => {
-    const { latitude, longitude, accuracy } = position.coords;
-    if (accuracy > 5000) {
-      output.innerHTML = `⚠️ Точность низкая (±${Math.round(accuracy)} м). Попробуйте подключиться к Wi-Fi или включить GPS.`;
+    if (!navigator.geolocation) {
+      output.innerHTML = 'Геолокация не поддерживается этим браузером.';
     } else {
-      output.innerHTML = `
-        ${latitude.toFixed(6)}
-        ${longitude.toFixed(6)}<br>
-        <strong>Точность:</strong> ±${Math.round(accuracy)} м
-      `;
-    }
-  },
-  (error) => {
-    output.innerHTML = `Ошибка: ${error.message}`;
-  },
-  {
-    enableHighAccuracy: true,
-    timeout: 10000,
-    maximumAge: 0
-  }
-);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude, accuracy, altitude } = position.coords;
+          if (accuracy > 5000) {
+            output.innerHTML = `⚠️ Низкая точность (±${Math.round(accuracy)} м).<br>Рекомендуется подключение к Wi-Fi или включение GPS.`;
+          } else {
+            output.innerHTML = `
+              <strong>Широта:</strong> ${latitude.toFixed(6)}<br>
+              <strong>Долгота:</strong> ${longitude.toFixed(6)}<br>
+              <strong>Точность:</strong> ±${Math.round(accuracy)} м<br>
+              ${altitude !== null ? `<strong>Высота:</strong> ${Math.round(altitude)} м` : ''}
+            `;
+          }
+        },
+        (error) => {
+          output.innerHTML = `Ошибка: ${error.message}`;
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
     }
   </script>
 
