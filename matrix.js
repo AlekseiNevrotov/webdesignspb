@@ -67,4 +67,5 @@ window.addEventListener('resize', () => {
     initMatrix();   // чтобы не сбивались позиции
   }
 });
+document.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
 
