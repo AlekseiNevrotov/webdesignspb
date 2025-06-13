@@ -53,8 +53,8 @@
       output.innerHTML = `⚠️ Точность низкая (±${Math.round(accuracy)} м). Попробуйте подключиться к Wi-Fi или включить GPS.`;
     } else {
       output.innerHTML = `
-        <strong>Широта:</strong> ${latitude.toFixed(6)}<br>
-        <strong>Долгота:</strong> ${longitude.toFixed(6)}<br>
+        ${latitude.toFixed(6)}
+        ${longitude.toFixed(6)}<br>
         <strong>Точность:</strong> ±${Math.round(accuracy)} м
       `;
     }
