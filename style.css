@@ -5,14 +5,12 @@
 }
 
 html, body {
-  height: auto;
-  overflow-y: auto;
+  height: 100%;
+  overflow: hidden; /* предотвращает прокрутку фона и мерцание */
   margin: 0;
   padding: 0;
-  -webkit-overflow-scrolling: touch; /* плавный скролл, но без перерисовки */
-  overscroll-behavior: none;         /* отключает "дёрганье" и эффект bounce */
+  -webkit-overflow-scrolling: touch;
 }
-
 body {
   font-family: 'Ubuntu', sans-serif;
   background: #121212;
@@ -183,22 +181,7 @@ footer {
   animation: glitch 0.6s linear;
 }
 
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  backdrop-filter: blur(0);
-  z-index: -1;
-  pointer-events: none;
-  transform: translateZ(0);            /* отдельный слой */
-  will-change: transform, opacity;    /* подсказка браузеру */
-  backface-visibility: hidden;        /* устраняет мигание */
-  contain: strict;                    /* изоляция содержимого */
-  touch-action: none;                 /* запрещает браузеру реагировать на касания */
-  -webkit-transform: translate3d(0, 0, 0);  /* дополнительно для iOS Safari */
-}
+
 
 main, .link, .logo-text, header, h1, footer {
   position: relative;
@@ -212,5 +195,42 @@ main, .link, .logo-text, header, h1, footer {
 @media (max-width: 768px) {
   .mobile-br {
     display: inline;
+  }
+}
+.matrix-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+}
+.matrix-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 200vh; /* запас сверху, чтобы падали */
+  animation: fall linear infinite;
+}
+
+.matrix-char {
+  font-family: monospace;
+  color: #00ff00;
+  font-size: 15px;
+  opacity: 0.75;
+  text-shadow: 0 0 5px #0f0;
+  line-height: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
