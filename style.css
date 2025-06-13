@@ -174,10 +174,12 @@ main, .link, .logo-text, header, h1, footer {
 }
 canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  pointer-events: none;
-  will-change: transform;
-  transform: translateZ(0);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform;
+      transform: translateZ(0);
 }

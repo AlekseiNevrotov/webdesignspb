@@ -20,7 +20,6 @@ const canvas = document.getElementById('matrix');
     }
 
     resizeCanvas();
-
     window.addEventListener('resize', resizeCanvas);
 
     function draw() {
@@ -45,9 +44,8 @@ const canvas = document.getElementById('matrix');
       }
     }
 
-    // 🔁 Контролируем частоту отрисовки
     let lastTime = 0;
-    const frameInterval = 50; // 50 мс = как setInterval(draw, 50)
+    const frameInterval = 50;
 
     function animate(time) {
       if (time - lastTime > frameInterval) {
