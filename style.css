@@ -10,6 +10,14 @@
       padding: 5px 5px;
       text-align: center;
     }
+    main {
+  width: 70%;
+  margin: 2em auto;  /* верх/низ 2em, слева/справа автоматические отступы для центрирования */
+  padding: 0 1em;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+}
     .logo-text {
       font-family: 'Alien League', sans-serif;
       font-size: 50px;
