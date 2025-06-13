@@ -30,6 +30,7 @@ function resizeCanvas() {
 }
 
 resizeCanvas();
+canvas.style.contain = 'strict';
 setupDrops();
 
 let resizeTimeout;
