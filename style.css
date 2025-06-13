@@ -183,3 +183,11 @@ main, .link, .logo-text, header, h1, footer {
       will-change: transform;
       transform: translateZ(0);
     }
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 50px;
+      color: white;
+      font-family: sans-serif;
+      height: 2000px; /* чтобы можно было прокручивать */
+    }
