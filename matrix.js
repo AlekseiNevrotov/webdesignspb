@@ -55,7 +55,16 @@ function draw() {
 setInterval(draw, 50);
 
 // Переразмеривание окна
+let lastWidth = window.innerWidth;
+let lastHeight = window.innerHeight;
+
 window.addEventListener('resize', () => {
-  resizeCanvas();
-  initMatrix();
+  if (window.innerWidth !== lastWidth || window.innerHeight !== lastHeight) {
+    lastWidth = window.innerWidth;
+    lastHeight = window.innerHeight;
+    
+    resizeCanvas(); // твоя функция, которая пересоздаёт размеры канваса
+    initMatrix();   // чтобы не сбивались позиции
+  }
 });
+
