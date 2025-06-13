@@ -52,7 +52,19 @@ function draw() {
   }
 }
 
-setInterval(draw, 50);
+let lastTime = 0;
+const frameInterval = 50; // миллисекунд между кадрами
+
+function animate(time) {
+  if (time - lastTime > frameInterval) {
+    draw();
+    lastTime = time;
+  }
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
 
 // Переразмеривание окна с проверкой изменений
 let lastWidth = window.innerWidth;
