@@ -172,8 +172,8 @@ main, .link, .logo-text, header, h1, footer {
     display: inline;
   }
 }
-canvas {
-  position: fixed;
+#matrix {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
@@ -182,4 +182,4 @@ canvas {
       pointer-events: none;
       will-change: transform;
       transform: translateZ(0);
-}
+    }
