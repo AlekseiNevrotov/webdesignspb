@@ -3,41 +3,47 @@ const ctx = canvas.getContext('2d');
 
 const fontSize = 15;
 const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
-let columns, drops;
+let columns = 0;
+let drops = [];
 
-let lastWidth = window.innerWidth;
-let lastHeight = window.innerHeight;
+function setupDrops() {
+  columns = Math.floor(window.innerWidth / fontSize);
+  drops = new Array(columns).fill(1);
+}
 
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
+
   canvas.width = window.innerWidth * dpr;
   canvas.height = window.innerHeight * dpr;
+
   canvas.style.width = window.innerWidth + 'px';
   canvas.style.height = window.innerHeight + 'px';
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
 
-  columns = Math.floor(window.innerWidth / fontSize);
-  drops = new Array(columns).fill(1);
+  const newColumns = Math.floor(window.innerWidth / fontSize);
+  if (newColumns !== columns) {
+    setupDrops(); // только если реально изменились колонки
+  }
 }
 
 resizeCanvas();
+setupDrops();
 
-// Обработчик resize с проверкой изменения размеров, чтобы не перезапускать при мелких изменениях (например, свайпы)
+let resizeTimeout;
 window.addEventListener('resize', () => {
-  if (window.innerWidth !== lastWidth || window.innerHeight !== lastHeight) {
-    lastWidth = window.innerWidth;
-    lastHeight = window.innerHeight;
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
     resizeCanvas();
-  }
+  }, 200); // debounce для iOS
 });
 
-// Обработка смены ориентации на мобильных, чтобы корректно менять размеры без лишних вызовов resize
 window.addEventListener('orientationchange', () => {
-  lastWidth = window.innerWidth;
-  lastHeight = window.innerHeight;
-  resizeCanvas();
+  setTimeout(() => {
+    resizeCanvas();
+  }, 300); // позже, чтобы всё точно подгрузилось
 });
 
 function draw() {
