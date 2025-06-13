@@ -9,6 +9,8 @@ html, body {
   overflow-y: auto;
   margin: 0;
   padding: 0;
+  -webkit-overflow-scrolling: touch; /* плавный скролл, но без перерисовки */
+  overscroll-behavior: none;         /* отключает "дёрганье" и эффект bounce */
 }
 
 body {
@@ -182,15 +184,19 @@ footer {
 }
 
 #matrix {
-  position: fixed;       /* фиксируем canvas на экране */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;           /* чтобы был позади контента */
-  pointer-events: none;  /* чтобы не мешал кликам */
-  will-change: transform; /* подсказка браузеру */
-  transform: translateZ(0); /* принудительный слой */
+  z-index: -1;
+  pointer-events: none;
+  transform: translateZ(0);            /* отдельный слой */
+  will-change: transform, opacity;    /* подсказка браузеру */
+  backface-visibility: hidden;        /* устраняет мигание */
+  contain: strict;                    /* изоляция содержимого */
+  touch-action: none;                 /* запрещает браузеру реагировать на касания */
+  -webkit-transform: translate3d(0, 0, 0);  /* дополнительно для iOS Safari */
 }
 
 main, .link, .logo-text, header, h1, footer {
