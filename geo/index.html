@@ -34,8 +34,8 @@
             output.innerHTML = `⚠️ Низкая точность (±${Math.round(accuracy)} м).<br>Рекомендуется подключение к Wi-Fi или включение GPS.`;
           } else {
             output.innerHTML = `
-              <strong>Широта:</strong> ${latitude.toFixed(6)}<br>
-              <strong>Долгота:</strong> ${longitude.toFixed(6)}<br>
+              ${latitude.toFixed(6)}
+              ${longitude.toFixed(6)}<br>
               <strong>Точность:</strong> ±${Math.round(accuracy)} м<br>
               ${altitude !== null ? `<strong>Высота:</strong> ${Math.round(altitude)} м` : ''}
             `;
