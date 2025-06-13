@@ -149,16 +149,24 @@
       animation: glitch 0.6s linear;
     }
     #matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      will-change: transform;
-      transform: translateZ(0);
-    }
+  position: fixed;       /* фиксируем canvas на экране */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;           /* чтобы был позади контента */
+  pointer-events: none;  /* чтобы не мешал кликам */
+  will-change: transform; /* подсказка браузеру */
+  transform: translateZ(0); /* принудительный слой */
+}
+
+.content {
+  position: relative;
+  z-index: 1;            /* над canvas */
+  overflow-y: auto;      /* прокрутка содержимого */
+  height: 100vh;         /* занимает весь экран */
+}
+
 main, .link, .logo-text, header, h1, footer {
   position: relative;
   z-index: 1;
