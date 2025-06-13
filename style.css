@@ -149,16 +149,16 @@
       animation: glitch 0.6s linear;
     }
     #matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  z-index: 0; /* под контентом */
-  background: #121212;
-  display: block;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform;
+      transform: translateZ(0);
+    }
 main, .link, .logo-text, header, h1, footer {
   position: relative;
   z-index: 1;
