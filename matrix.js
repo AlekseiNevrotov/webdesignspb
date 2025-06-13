@@ -1,58 +1,47 @@
-const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
 
-    const fontSize = 15;
-    const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
-    let columns, drops;
+  // Устанавливаем размер канваса равным размеру окна
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
+  // Символы для эффекта матрицы (можно изменить или добавить свои)
+  const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
+  const fontSize = 15;
+  const columns = Math.floor(canvas.width / fontSize);
 
-      columns = Math.floor(window.innerWidth / fontSize);
-      drops = new Array(columns).fill(1);
-    }
+  // Массив для отслеживания y-позиции каждой колонки
+  const drops = new Array(columns).fill(1);
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+  function draw() {
+    // Чёрный полупрозрачный фон для затухания следов
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+    ctx.fillStyle = '#666'; // ярко-зелёный цвет
+    ctx.font = fontSize + 'px monospace';
 
-      ctx.fillStyle = '#666';
-      ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
+      ctx.fillText(text, x, y);
 
-        ctx.fillText(text, x, y);
-
-        if (y > canvas.height / (window.devicePixelRatio || 1) && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
+      // Если символ вышел за экран — сбросить
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
+
+      drops[i]++;
     }
+  }
 
-    let lastTime = 0;
-    const frameInterval = 50;
+  setInterval(draw, 50);
 
-    function animate(time) {
-      if (time - lastTime > frameInterval) {
-        draw();
-        lastTime = time;
-      }
-      requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate);
+  // Обновляем размер канваса при изменении окна
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });

@@ -172,22 +172,3 @@ main, .link, .logo-text, header, h1, footer {
     display: inline;
   }
 }
-#matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      will-change: transform;
-      transform: translateZ(0);
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-      padding: 50px;
-      color: white;
-      font-family: sans-serif;
-      height: 2000px; /* чтобы можно было прокручивать */
-    }
