@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Typing Console with Soft Sound & Reverb</title>
+  <title>Создание и редизайн сайтов</title>
+  <meta name="keywords" content="Веб-дизайн, создание сайтов, создание сайтов СПб, заказать сайт, разработка сайтов под ключ, редизайн, веб-студия СПб, дизайн сайтов, разработка сайтов СПб, лендинг пейдж, корпоративный сайт, интернет-магазин СПб">
+  <meta name="description" content="Профессиональная разработка и дизайн сайтов в Санкт-Петербурге. Создаём сайты под ключ: от концепции до запуска. Закажите сайт для вашего бизнеса в СПб.">
   <style>
     body {
       background: black;
@@ -54,7 +56,7 @@
 <button id="startBtn">Нажмите, чтобы начать</button>
 
 <script>
-  const text = "Привет! Мы создаём креативные, ни на что не похожие сайты, которые помогают решать конкретные задачи бизнеса.\n\n+7 950 014 37 77";
+  const text = "Нужен современный и эффективный сайт, который будет работать на ваш бизнес? Мы разрабатываем сайты под ключ — от идеи и дизайна до запуска и поддержки. Каждый проект — это индивидуальное решение, ориентированное на ваши цели.\n\nЗакажите сайт уже сегодня — и начните получать результат!\n\n+7 950 014 37 77";
   const consoleElem = document.getElementById('console');
   const startBtn = document.getElementById('startBtn');
 
@@ -96,7 +98,7 @@
       consoleElem.textContent += text.charAt(idx);
       playClick();
       idx++;
-      setTimeout(typeWriter, 100 + Math.random() * 100);
+      setTimeout(typeWriter, 20 + Math.random() * 20);
     }
   }
 
