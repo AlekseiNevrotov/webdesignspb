@@ -1,54 +1,46 @@
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
+// ⬇️ ДОБАВИ ЭТО, ЧТОБЫ ПОДСКАЗАТЬ БРАУЗЕРУ УДЕРЖИВАТЬ LAYER
+canvas.style.willChange = 'transform';
+canvas.style.transform = 'translateZ(0)';
+canvas.style.backfaceVisibility = 'hidden';
+canvas.style.contain = 'strict'; // для изоляции layout
+canvas.style.touchAction = 'manipulation'; // отключает двойной тап на iOS
+
 const fontSize = 15;
 const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
-let columns = 0;
-let drops = [];
-
-function setupDrops() {
-  columns = Math.floor(window.innerWidth / fontSize);
-  drops = new Array(columns).fill(1);
-}
+let columns, drops;
 
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
-
   canvas.width = window.innerWidth * dpr;
   canvas.height = window.innerHeight * dpr;
-
   canvas.style.width = window.innerWidth + 'px';
   canvas.style.height = window.innerHeight + 'px';
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
 
-  const newColumns = Math.floor(window.innerWidth / fontSize);
-  if (newColumns !== columns) {
-    setupDrops(); // только если реально изменились колонки
-  }
+  columns = Math.floor(window.innerWidth / fontSize);
+  drops = new Array(columns).fill(1);
 }
 
 resizeCanvas();
-setupDrops();
+window.addEventListener('resize', resizeCanvas);
 
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    resizeCanvas();
-  }, 200); // debounce для iOS
-});
-
-window.addEventListener('orientationchange', () => {
-  setTimeout(() => {
-    resizeCanvas();
-  }, 300); // позже, чтобы всё точно подгрузилось
-});
+// ⬇️ ДОБАВИ ЭТО — УБИРАЕТ ЗАДЕРЖКИ НА iOS ПРИ ТАЧЕ
+window.addEventListener('touchstart', () => {}, { passive: true });
+window.addEventListener('touchmove', () => {}, { passive: true });
 
 function draw() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-  ctx.fillRect(0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width / (window.devicePixelRatio || 1),
+    canvas.height / (window.devicePixelRatio || 1)
+  );
 
   ctx.fillStyle = '#666';
   ctx.font = fontSize + 'px monospace';
