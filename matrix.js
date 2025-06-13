@@ -6,9 +6,9 @@
   canvas.height = window.innerHeight;
 
   // Символы для эффекта матрицы (можно изменить или добавить свои)
-  const letters = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789'.split('');
+  const letters = 'ВЕБДИЗАЙНСПWBDESIGNSP-78'.split('');
 
-  const fontSize = 16;
+  const fontSize = 15;
   const columns = Math.floor(canvas.width / fontSize);
 
   // Массив для отслеживания y-позиции каждой колонки
@@ -16,10 +16,10 @@
 
   function draw() {
     // Чёрный полупрозрачный фон для затухания следов
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = 'rgba(91, 112, 81, 1)'; // ярко-зелёный цвет
+    ctx.fillStyle = '#666'; // ярко-зелёный цвет
     ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < drops.length; i++) {

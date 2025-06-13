@@ -154,8 +154,9 @@
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: 0.5;
   z-index: 0; /* под контентом */
-  background: black;
+  background: #121212;
   display: block;
 }
 main, .link, .logo-text, header, h1, footer {
