@@ -1,58 +1,76 @@
 const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
-    const fontSize = 15;
-    const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
-    let columns, drops;
+const fontSize = 15;
+const letters = 'ВЕБ-ДИЗАЙН.СПБ, WEB-DESIGN.SPB-78'.split('');
+let columns, drops;
 
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
+let lastWidth = window.innerWidth;
+let lastHeight = window.innerHeight;
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
 
-      columns = Math.floor(window.innerWidth / fontSize);
-      drops = new Array(columns).fill(1);
-    }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
 
+  columns = Math.floor(window.innerWidth / fontSize);
+  drops = new Array(columns).fill(1);
+}
+
+resizeCanvas();
+
+// Обработчик resize с проверкой изменения размеров, чтобы не перезапускать при мелких изменениях (например, свайпы)
+window.addEventListener('resize', () => {
+  if (window.innerWidth !== lastWidth || window.innerHeight !== lastHeight) {
+    lastWidth = window.innerWidth;
+    lastHeight = window.innerHeight;
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+  }
+});
 
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+// Обработка смены ориентации на мобильных, чтобы корректно менять размеры без лишних вызовов resize
+window.addEventListener('orientationchange', () => {
+  lastWidth = window.innerWidth;
+  lastHeight = window.innerHeight;
+  resizeCanvas();
+});
 
-      ctx.fillStyle = '#666';
-      ctx.font = fontSize + 'px monospace';
+function draw() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+  ctx.fillRect(0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
+  ctx.fillStyle = '#666';
+  ctx.font = fontSize + 'px monospace';
 
-        ctx.fillText(text, x, y);
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters[Math.floor(Math.random() * letters.length)];
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
 
-        if (y > canvas.height / (window.devicePixelRatio || 1) && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
+    ctx.fillText(text, x, y);
 
-        drops[i]++;
-      }
+    if (y > canvas.height / (window.devicePixelRatio || 1) && Math.random() > 0.975) {
+      drops[i] = 0;
     }
 
-    let lastTime = 0;
-    const frameInterval = 50;
+    drops[i]++;
+  }
+}
 
-    function animate(time) {
-      if (time - lastTime > frameInterval) {
-        draw();
-        lastTime = time;
-      }
-      requestAnimationFrame(animate);
-    }
+let lastTime = 0;
+const frameInterval = 50;
 
-    requestAnimationFrame(animate);
+function animate(time) {
+  if (time - lastTime > frameInterval) {
+    draw();
+    lastTime = time;
+  }
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
