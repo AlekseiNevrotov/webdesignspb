@@ -54,7 +54,7 @@ function draw() {
 
 setInterval(draw, 50);
 
-// Переразмеривание окна
+// Переразмеривание окна с проверкой изменений
 let lastWidth = window.innerWidth;
 let lastHeight = window.innerHeight;
 
@@ -62,10 +62,8 @@ window.addEventListener('resize', () => {
   if (window.innerWidth !== lastWidth || window.innerHeight !== lastHeight) {
     lastWidth = window.innerWidth;
     lastHeight = window.innerHeight;
-    
-    resizeCanvas(); // твоя функция, которая пересоздаёт размеры канваса
-    initMatrix();   // чтобы не сбивались позиции
+
+    resizeCanvas();
+    initMatrix();
   }
 });
-document.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
-

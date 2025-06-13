@@ -172,3 +172,10 @@ main, .link, .logo-text, header, h1, footer {
     display: inline;
   }
 }
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none; /* чтобы не мешал кликам */
+}
