@@ -183,5 +183,19 @@
 
     generatePalette(); // Генерируем сразу при загрузке страницы
   </script>
+    <script>
+    let lastTap = 0;
+
+    document.querySelectorAll('.palette-box').forEach(box => {
+      box.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 400 && tapLength > 0) {
+          e.preventDefault(); // отменяет двойной тап
+        }
+        lastTap = currentTime;
+      });
+    });
+  </script>
 </body>
 </html>
