@@ -24,6 +24,9 @@
       margin: 25px auto;
       user-select: none;
       pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none; /* Safari / iOS */
+      -ms-user-select: none; 
     }
     h1 {
       font-size: 20px;
